@@ -1,0 +1,28 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: msa-apigateway-service
+
+zuul:
+  routes:
+    msa-user-service:
+      path: /api/msa-user/**
+      url: http://localhost:8000
+    msa-stock-service:
+      path: /api/msa-stock/**
+      url: http://localhost:8010
+    msa-batch-service:
+      url: http://localhost:8020
+
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}:${server.port}}}
